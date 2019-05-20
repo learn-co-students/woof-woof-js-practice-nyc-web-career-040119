@@ -43,13 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
             })
               .then(resp => resp.json())
               .then(pupWithUpdatedGoodness => {
-                // debugger;
+                // LOOK UP IN SCOPE CHAIN AND UPDATE GOODNESS OF pupObj AND dogSpan //////////
                 pupObj.isGoodDog = pupWithUpdatedGoodness.isGoodDog;
                 dogSpan.isGoodDog = !dogSpan.isGoodDog;
                 if (!showingBadDogs) {
+                  //ONLY REMOVES dogSpan FROM dogBar IF NOT SHOWING GOOD DOGS //////////
                   dogSpan.style.display === "" ? dogSpan.style.display = "none" : dogSpan.style.display = ""
                 }
-                // !showingBadDogs ? dogSpan.style.display = "none" : null
                 goodDogBtn.innerText = pupObj.isGoodDog ? "Good Dog!" : "Bad Dog!";
             });
           });
@@ -64,8 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
     goodDogBtn.innerText = `Filter good dogs: ${showingBadDogs ? "OFF" : "ON"}`
     for (const dogSpan of dogBar.children) {
       if (!showingBadDogs) {
+        // HIDES ALL BAD DOGS IF FILTER ON //////////
         !dogSpan.isGoodDog ? dogSpan.style.display = "none" : null
       } else {
+        // SHOWS ALL DOGS GOOD OR BAD IF FILTER OFF //////////
         dogSpan.style.display = "";
       }
     }
