@@ -22,36 +22,32 @@ document.addEventListener("DOMContentLoaded", () => {
       newPup.id = pup.id
       newPup.innerText = pup.name
       newPup.isGoodDog = pup.isGoodDog
-
       dogBar.appendChild(newPup)
 
       // dog-info
       newPup.addEventListener("click", () => {
-        const goodDogBadDogButton = document.createElement("button")
-        goodDogBadDogButton.id = pup.id
-
+        const goodDogBadDogBtn = document.createElement("button")
+        goodDogBadDogBtn.id = pup.id
         if (pup.isGoodDog){
-          goodDogBadDogButton.innerText = "Good Dog!"
+          goodDogBadDogBtn.innerText = "Good Dog!"
         } else {
-          goodDogBadDogButton.innerText = "Bad Dog!"
+          goodDogBadDogBtn.innerText = "Bad Dog!"
         }
 
         dogInfo.innerHTML = `
         <img src=${pup.image}>
         <h2>${pup.name}</h2>
         `
-        dogInfo.appendChild(goodDogBadDogButton)
+        dogInfo.appendChild(goodDogBadDogBtn)
 
         // UPDATE
 
-        goodDogBadDogButton.addEventListener("click", event => {
-          let clickDogButton = event.target
-          let clickDogId = event.target.id
+        goodDogBadDogBtn.addEventListener("click", () => {
 
-          if (pup.isGoodDog){
+          if (newPup.isGoodDog){
             pup.isGoodDog = !pup.isGoodDog
-            clickDogButton.innerText = "Bad Dog!"
-
+            newPup.isGoodDog = pup.isGoodDog
+            goodDogBadDogBtn.innerText = "Bad Dog!"
             // toggleFilter
             if (toggleFilter){
               newPup.style.display = "none"
@@ -60,12 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           } else {
             pup.isGoodDog = !pup.isGoodDog
-            clickDogButton.innerText = "Good Dog!"
-            // newPup.style.display = ""
+            newPup.isGoodDog = pup.isGoodDog
+            goodDogBadDogBtn.innerText = "Good Dog!"
+            if (toggleFilter){
+              newPup.style.display = ""
+            }
           }
 
           // patch request
-          fetch(PUP_URLS + `/${clickDogId}`, {
+          fetch(PUP_URLS + `/${pup.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -82,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // end get request
 
   // BONUS
-  goodDogFilter.addEventListener("click", (event) => {
+  goodDogFilter.addEventListener("click", () => {
     toggleFilter = !toggleFilter
 
     // update text on toggle
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
       goodDogFilter.innerText = "Filter good dogs: ON"
     } else {
       goodDogFilter.innerText = "Filter good dogs: OFF"
-    }
+    } // end if
 
     // hide bad dogs if toggled
     const allDogSpans = dogBar.children
@@ -100,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         dogSpan.style.display = ""
       }
-    }
-
+    } // end for
   }) // end goodDogFilter event listener
 })
