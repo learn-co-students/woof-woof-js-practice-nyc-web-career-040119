@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let toggleFilter = false
 
   // READ
-  // dog-bar
   // get request
   fetch(PUP_URLS)
   .then(response => response.json())
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
       newPup.isGoodDog = pup.isGoodDog
       dogBar.appendChild(newPup)
 
-      // dog-info
       newPup.addEventListener("click", () => {
         const goodDogBadDogBtn = document.createElement("button")
         goodDogBadDogBtn.id = pup.id
@@ -41,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dogInfo.appendChild(goodDogBadDogBtn)
 
         // UPDATE
-
         goodDogBadDogBtn.addEventListener("click", () => {
 
           if (newPup.isGoodDog){
@@ -51,13 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // toggleFilter
             if (toggleFilter){
               newPup.style.display = "none"
-            } else {
-              newPup.style.display = ""
             }
           } else {
             pup.isGoodDog = !pup.isGoodDog
             newPup.isGoodDog = pup.isGoodDog
             goodDogBadDogBtn.innerText = "Good Dog!"
+            // toggleFilter
             if (toggleFilter){
               newPup.style.display = ""
             }
@@ -94,6 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // hide bad dogs if toggled
     const allDogSpans = dogBar.children
     for (const dogSpan of allDogSpans){
+      // if toggleFilter is true and dogSpan.isGoodDog is false
+      // hide the dog in the span
       if (toggleFilter && !dogSpan.isGoodDog){
         dogSpan.style.display = "none"
       } else {
