@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }) //Fetch-GET DOG BAR DATA ***************
 
   dogBar.addEventListener("click", (event) => {
-    let onClick = event.target
-    let pupId = parseInt(onClick.id)
+    let onBarClick = event.target
+    let pupId = parseInt(onBarClick.id)
     dogSummaryContainer.innerHTML = ``
     fetch(`http://localhost:3000/pups/${pupId}`).then(resp => resp.json())
       .then(pup => {
@@ -30,12 +30,34 @@ document.addEventListener('DOMContentLoaded', function() {
               <h1>DOGGO: ${pup.name}</h1>
               <div id="dog-info">
                 <img src="${pup.image}" />
-              <div>
+              </div>
               <button id="${pup.id}"> Good Dog!</button>
           `
     })
   })// onClick Fetch-GET for pup-info
 
+  dogSummaryContainer.addEventListener("click", (event) => {
+    let clickTarget = event.target
+    let onToggleClick = clickTarget.innerText
+    let pupId = parseInt(onToggleClick.id)
+    if (onToggleClick === "Good Dog!") {
+      clickTarget.innerHTML=`Bad Dog!`
+    } else {
+      clickTarget.innerHTML=`Good Dog!`
+    }
+
+      // fetch(`http://localhost:3000/pups/${pupId}`, {
+      //   method:"PATCH",
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     "isGoodDog":
+      //   })
+      // })
+
+  })//end of onClick Toggle
 
 
 
