@@ -13,7 +13,6 @@ fetch('http://localhost:3000/pups')
     `
     }
 
-
     let dogInfo = document.querySelector('#dog-info')
 
     dogDiv.addEventListener('click', function(event){
@@ -24,7 +23,7 @@ fetch('http://localhost:3000/pups')
       let dogClicked = dogList[clickedId]
       let temperment = dogClicked.isGoodDog
 
-      console.log(temperment)
+
 
 
 
@@ -46,7 +45,7 @@ fetch('http://localhost:3000/pups')
 
       button.innerText = temperment
 
-
+      console.log(dogList)
 
       dogInfo.appendChild(button)
 
@@ -76,7 +75,48 @@ fetch('http://localhost:3000/pups')
             "isGoodDog": !dogClicked.isGoodDog
           })
         })
-        console.log(buttonCid)
       })
     })
+    let dogArr = []
+    // let badDogs = []
+    for(dogs in dogList){
+
+      dogArr.push(dogList[dogs])
+    }
+
+    let dogFil = document.getElementById("good-dog-filter")
+    let goodDogs = dogArr.filter(doge => doge.isGoodDog === true)
+    let badDogs = dogArr.filter(doge => doge.isGoodDog === false)
+
+    dogFil.addEventListener('click', function(event){
+
+      if (dogFil.innerText === "Filter good dogs: OFF"){
+        dogFil.innerText = "Filter good dogs: ON"
+
+        dogInfo.innerHTML = ""
+
+        for (i in goodDogs){
+        dogInfo.innerHTML += `
+        <h2>${goodDogs[i].name}</h2>
+        <img src="${goodDogs[i].image}">
+
+        `
+        }
+      }
+      else
+      {
+        dogFil.innerText = "Filter good dogs: OFF"
+
+        dogInfo.innerHTML = ""
+
+        for (i in badDogs){
+        dogInfo.innerHTML += `
+        <h2>${badDogs[i].name}</h2>
+        <img src="${badDogs[i].image}">
+        `
+        }
+      }
   })
+})
+
+//too lazy to add a button again probably wouldnt be that hard
