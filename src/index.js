@@ -10,11 +10,10 @@ pupsBar.addEventListener('click', e => {
   getPupperInfo(pupID)
 })
 
-// Filter Only Good Puppers
+// Filter Only Good Puppers & Switch Bad to Good
 pupFilter.addEventListener('click', e => {
-  let showSpan = document.querySelector('#dog-bar')
   pupsBar.innerHTML = ``
-  let filterSt = (pupFilter.innerText === "Filter good dogs: OFF" ? pupFilter.className = true : pupFilter.className = false)
+  let filterSt = (pupFilter.innerText === "Filter good dogs: OFF" ? true : false)
   filterSt = !filterSt
   if (filterSt) {
     pupFilter.innerText = `Filter good dogs: OFF`
@@ -23,32 +22,29 @@ pupFilter.addEventListener('click', e => {
     pupFilter.innerText = `Filter good dogs: ON`
     indexFetch(true)
   }
-})
 
-// Change Good Dog to Bad Dog
-pupInfo.addEventListener('click', e => {
-  let button = e.target
-  let switchUp = JSON.parse(button.className)
-  let showSpan = document.querySelector(`.show${button.id}`)
+  pupInfo.addEventListener('click', e => {
+    let button = e.target
+    let switchUp = JSON.parse(button.className)
+    let showSpan = document.querySelector(`.show${button.id}`).style
 
-  switchUp = !switchUp
+    switchUp = !switchUp
 
-  if (switchUp) {
-    // debugger
-    button.innerText = "Good Dog!"
-    button.className = "true"
-    if (pupFilter.className === "true") {
-      showSpan.style.display = ''
+    if (switchUp) {
+      button.innerText = "Good Dog!"
+      button.className = "true"
+      if (!filterSt) {
+        showSpan.display = ''
+      }
+    } else {
+      button.innerText = "Bad Dog!"
+      button.className = "false"
+      if (!filterSt) {
+        showSpan.display = 'none'
+      }
     }
-  } else {
-    button.innerText = "Bad Dog!"
-    button.className = "false"
-    if (pupFilter.className === "true") {
-      showSpan.style.display = 'none'
-    }
-  }
-
-  fetFunc(PUPS_URL + `/${e.target.id}`,"PATCH",{isGoodDog: switchUp})
+    fetFunc(PUPS_URL + `/${e.target.id}`,"PATCH",{isGoodDog: switchUp})
+  })
 })
 
 // Helper/Cleanup Functions For Fetching
