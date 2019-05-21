@@ -56,10 +56,10 @@ fetch('http://localhost:3000/pups')
         console.log(button)
 
 
-        if (button.innerText === "Good Dog!"){
+        if (dogClicked.isGoodDog === true){
           button.innerText = "Bad Dog!"
         }
-        else if (button.innerText === "Bad Dog!"){
+        else{
           button.innerText = "Good Dog!"
         }
 
@@ -78,7 +78,6 @@ fetch('http://localhost:3000/pups')
       })
     })
     let dogArr = []
-    // let badDogs = []
     for(dogs in dogList){
 
       dogArr.push(dogList[dogs])
@@ -96,11 +95,12 @@ fetch('http://localhost:3000/pups')
         dogInfo.innerHTML = ""
 
         for (i in goodDogs){
+
         dogInfo.innerHTML += `
         <h2>${goodDogs[i].name}</h2>
         <img src="${goodDogs[i].image}">
-
         `
+
         }
       }
       else
@@ -110,13 +110,15 @@ fetch('http://localhost:3000/pups')
         dogInfo.innerHTML = ""
 
         for (i in badDogs){
+
         dogInfo.innerHTML += `
         <h2>${badDogs[i].name}</h2>
         <img src="${badDogs[i].image}">
         `
+        
         }
       }
   })
 })
 
-//too lazy to add a button again probably wouldnt be that hard
+//too lazy to add a good dog button to the filtered dogs probably wouldnt be that hard
